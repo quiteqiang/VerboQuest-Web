@@ -37,7 +37,7 @@ VerboQuest 是一个基于 Web 的 GRE 词汇记忆辅助工具，旨在帮助�
 ```
 
 #### 示例输出
-```json
+```
 The Future of Artificial Intelligence
 
 In today's **ubiquitous** world of technology, artificial intelligence (AI) has become an integral part of our lives. However, the impact of AI may be **ephemeral** if we do not address its ethical implications. With **alacrity**, researchers are working to ensure that AI benefits humanity in the long term.
