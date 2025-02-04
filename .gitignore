@@ -1,0 +1,30 @@
+# Logs
+VerboQuest-Web/logs
+VerboQuest-Web/*.log
+VerboQuest-Web/npm-debug.log*
+VerboQuest-Web/yarn-debug.log*
+VerboQuest-Web/yarn-error.log*
+VerboQuest-Web/pnpm-debug.log*
+VerboQuest-Web/lerna-debug.log*
+
+VerboQuest-Web/node_modules
+VerboQuest-Web/.DS_Store
+VerboQuest-Web/dist
+VerboQuest-Web/dist-ssr
+VerboQuest-Web/coverage
+VerboQuest-Web/*.local
+
+VerboQuest-Web//cypress/videos/
+VerboQuest-Web//cypress/screenshots/
+
+# Editor directories and files
+VerboQuest-Web/.vscode/*
+VerboQuest-Web/!.vscode/extensions.json
+VerboQuest-Web/.idea
+VerboQuest-Web/*.suo
+VerboQuest-Web/*.ntvs*
+VerboQuest-Web/*.njsproj
+VerboQuest-Web/*.sln
+VerboQuest-Web/*.sw?
+
+VerboQuest-Web/*.tsbuildinfo
