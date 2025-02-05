@@ -33,22 +33,25 @@ export default {
   methods: {
     async fetchExplanation() {
       this.isLoading = true; // 开始加载
-      const wordData = {'word': 'feb'}
-      new Promise((resolve, reject) => {
-            recordWord(wordData).then(response => {
-              if (response.code == 200) {
-                const { data } = response
-              }
-              resolve()
-            }).catch(error => {
-              reject(error)
-            })
+      // 把这个文字替换成输入的文字
+      const words = this.message.split('\n')
+      
+      for (let i=0; i<words.length; i++) {
+        const wordData = {'word': words[i]}
+        new Promise((resolve, reject) => {
+          recordWord(wordData).then(response => {
+            if (response.code == 200) {
+              const { data } = response
+            }
+            resolve()
+          }).catch(error => {
+            reject(error)
           })
+        })
+      }
+
       this.isLoading = false; // 结束加载
     },
-    filterInputText() {
-      
-    }
   },
 };
 </script>
