@@ -14,7 +14,8 @@
     "element-plus": "^2.9.3",
     "stores": "^1.0.0",
     "vue": "^3.5.13",
-    "vue-router": "^4.5.0"
+    "vue-router": "^4.5.0",
+    "vue3-toastify": "^0.2.8"
   },
   "devDependencies": {
     "@eslint/js": "^9.18.0",

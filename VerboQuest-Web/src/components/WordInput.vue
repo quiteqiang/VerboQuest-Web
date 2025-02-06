@@ -18,6 +18,8 @@
 import axios from 'axios'
 import { onMounted } from 'vue'
 import { recordWord } from '@/api/word'
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 
 export default {
   props: {
@@ -40,8 +42,18 @@ export default {
         const wordData = {'word': words[i]}
         new Promise((resolve, reject) => {
           recordWord(wordData).then(response => {
-            if (response.code == 200) {
+            console.log(response)
+            if (response.status == 200) {
+              //TODO: 显示固定个数单词在页面
               const { data } = response
+              toast(words[i] + "添加成功", {
+                "theme": "auto",
+                "type": "success",
+                "pauseOnFocusLoss": false,
+                "autoClose": 2000,
+                "transition": "flip",
+                "dangerouslyHTMLString": true
+              })
             }
             resolve()
           }).catch(error => {
@@ -49,7 +61,6 @@ export default {
           })
         })
       }
-
       this.isLoading = false; // 结束加载
     },
   },
