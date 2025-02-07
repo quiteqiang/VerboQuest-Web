@@ -7,20 +7,22 @@
           class="mx-auto"
           color="surface-variant"
           max-width="344"
-          subtitle="Greyhound divisely hello coldly fonwderfully"
           title="Headline"
+          text="Greyhound divisely hello coldly fonwderfully"
         >
+        <v-card-subtitle class="normal-white-space">
+            Greyhound divisely hello coldly fonwderfully, Greyhound divisely hello coldly fonwderfully, Greyhound divisely hello coldly fonwderfully
+          </v-card-subtitle>
           <template v-slot:actions>
             <v-btn text>Button</v-btn>
           </template>
         </v-card>
-        <div class="text-center text-caption">{{ variant }}</div>
       </v-col>
     </v-row>
     <div class="card">
-      <span>Multiline message is:</span>
+      <span class="fancy-text">Multiline words:</span>
       <p style="white-space: pre-line;">{{ message }}</p>
-      <textarea v-model="message" placeholder="add multiple lines"></textarea>
+      <textarea v-model="message" placeholder="add multiple lines words" class="bordered-textarea"></textarea>
       <div class="explanation" v-html="aiExplanation"></div>
       <button @click="fetchExplanation" :disabled="isLoading">
         {{ isLoading ? '添加中...' : '添加单词' }}
@@ -42,7 +44,9 @@ export default {
       aiExplanation: '', // 存储 AI 解析的内容
       isLoading: false,  // 加载状态
       inputWord: '',
-      variants: ['elevated', 'flat', 'tonal', 'outlined', 'text', 'plain'],
+      variants: ['elevated', 'tonal', 'elevated',
+      'elevated', 'tonal', 'elevated'
+      ],
     };
   },
   methods: {
@@ -69,6 +73,14 @@ export default {
             }
             resolve()
           }).catch(error => {
+            toast(words[i] + "添加失败   🤯", {
+                "theme": "auto",
+                "type": "error",
+                "pauseOnFocusLoss": false,
+                "autoClose": 2000,
+                "transition": "zoom",
+                "dangerouslyHTMLString": true
+              })
             reject(error)
           })
         })
@@ -106,5 +118,25 @@ button:disabled {
 .explanation {
   margin-top: 20px;
   text-align: left;
+}
+
+.bordered-textarea {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.fancy-text {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #007bff;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.v-card .v-card-subtitle {
+  white-space: normal;
 }
 </style>
