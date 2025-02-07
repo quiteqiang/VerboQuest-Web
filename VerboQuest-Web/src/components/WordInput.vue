@@ -1,45 +1,57 @@
 <template>
-  <div class="card">
-    <!-- <button @click="fetchExplanation" :disabled="isLoading">
-      {{ isLoading ? '生成中...' : '智能解析' }}
-    </button> -->
-    
-    <span>Multiline message is:</span>
-    <p style="white-space: pre-line;">{{ message }}</p>
-    <textarea v-model="message" placeholder="add multiple lines"></textarea>
-    <div class="explanation" v-html="aiExplanation"></div>
-    <button @click="fetchExplanation" :disabled="isLoading">
-      {{ isLoading ? '添加中...' : '添加单词' }}
-    </button>
-  </div>
+  <v-container>
+    <v-row dense>
+      <v-col v-for="(variant, i) in variants" :key="i" cols="12" md="3">
+        <v-card
+          :variant="variant"
+          class="mx-auto"
+          color="surface-variant"
+          max-width="344"
+          subtitle="Greyhound divisely hello coldly fonwderfully"
+          title="Headline"
+        >
+          <template v-slot:actions>
+            <v-btn text>Button</v-btn>
+          </template>
+        </v-card>
+        <div class="text-center text-caption">{{ variant }}</div>
+      </v-col>
+    </v-row>
+    <div class="card">
+      <span>Multiline message is:</span>
+      <p style="white-space: pre-line;">{{ message }}</p>
+      <textarea v-model="message" placeholder="add multiple lines"></textarea>
+      <div class="explanation" v-html="aiExplanation"></div>
+      <button @click="fetchExplanation" :disabled="isLoading">
+        {{ isLoading ? '添加中...' : '添加单词' }}
+      </button>
+    </div>
+  </v-container>
 </template>
 
 <script>
-import axios from 'axios'
-import { onMounted } from 'vue'
+import { VCard, } from 'vuetify/lib/components/index.mjs';
 import { recordWord } from '@/api/word'
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 
 export default {
-  props: {
-  },
   data() {
     return {
       message: '',
       aiExplanation: '', // 存储 AI 解析的内容
       isLoading: false,  // 加载状态
-      inputWord: ''
+      inputWord: '',
+      variants: ['elevated', 'flat', 'tonal', 'outlined', 'text', 'plain'],
     };
   },
   methods: {
     async fetchExplanation() {
       this.isLoading = true; // 开始加载
-      // 把这个文字替换成输入的文字
       const words = this.message.split('\n')
       
-      for (let i=0; i<words.length; i++) {
-        const wordData = {'word': words[i]}
+      for (let i = 0; i < words.length; i++) {
+        const wordData = { 'word': words[i] }
         new Promise((resolve, reject) => {
           recordWord(wordData).then(response => {
             console.log(response)
