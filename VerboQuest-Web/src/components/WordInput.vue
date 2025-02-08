@@ -1,17 +1,17 @@
 <template>
   <v-container>
     <v-row dense>
-      <v-col v-for="(variant, i) in variants" :key="i" cols="16" md="4">
+      <v-col v-for="item in cards" :key="item.wordId" cols="16" md="4">
         <v-card
-          :variant="variant"
+          variant="elevated"
           class="mx-auto"
           color="surface-variant"
           max-width="344"
-          title="Headline"
-          text="Greyhound divisely hello coldly fonwderfully"
+          :title="item.word"
+          :text="item.definition"
         >
         <v-card-subtitle class="normal-white-space">
-            Greyhound divisely hello coldly fonwderfully, Greyhound divisely hello coldly fonwderfully, Greyhound divisely hello coldly fonwderfully
+            {{ item.sentence}}
           </v-card-subtitle>
           <template v-slot:actions>
             <v-btn text>Button</v-btn>
@@ -45,7 +45,7 @@ export default {
       // 在这里可以执行DOM操作或数据请求
       console.log('组件已挂载');
       try {
-        fetchWords(2).then(response => {
+        fetchWords(6).then(response => {
           console.log("mounted words")
           console.log(response)
         });
@@ -69,6 +69,22 @@ export default {
       variants: ['elevated', 'tonal', 'elevated',
       'elevated', 'tonal', 'elevated'
       ],
+      cards: [
+        {
+            "wordId": 32,
+            "word": "history",
+            "timeCreated": "2025-02-08T14:44:45.463+00:00",
+            "definition": "The study of past events, particularly in human affairs",
+            "sentence": "medieval European history"
+        },
+        {
+            "wordId": 33,
+            "word": "heterogeneous",
+            "timeCreated": "2025-02-08T14:45:35.410+00:00",
+            "definition": "diverse in character or content",
+            "sentence": "a large and heterogeneous collection"
+        }
+    ]
     };
   },
   methods: {
