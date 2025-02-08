@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { ElMessage } from 'element-plus'
 import { useRouter } from 'vue-router'
-const router = useRouter()
+// const router = useRouter()
 const baseURL = 'http://localhost:8083/'
  
  
@@ -41,7 +41,7 @@ instance.interceptors.response.use(
     // TODO 5. 处理401错误
     // 错误的特殊情况 => 401 权限不足 或 token 过期 => 拦截到登录
     if (err.response?.status === 401) {
-      router.push('/login')
+      // router.push('/login')
     }
  
     // 错误的默认情况 => 只要给提示

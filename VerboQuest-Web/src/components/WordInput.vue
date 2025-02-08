@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row dense>
-      <v-col v-for="(variant, i) in variants" :key="i" cols="12" md="3">
+      <v-col v-for="(variant, i) in variants" :key="i" cols="16" md="4">
         <v-card
           :variant="variant"
           class="mx-auto"
@@ -33,11 +33,33 @@
 
 <script>
 import { VCard, } from 'vuetify/lib/components/index.mjs';
-import { recordWord } from '@/api/word'
+import { recordWord, fetchWords } from '@/api/word'
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
+import { onMounted } from 'vue';
 
 export default {
+  setup() {
+ 
+    onMounted(() => {
+      // 在这里可以执行DOM操作或数据请求
+      console.log('组件已挂载');
+      try {
+        fetchWords(2).then(response => {
+          console.log("mounted words")
+          console.log(response)
+        });
+      } catch (error) {
+        console.error('请求错误:', error);
+      }
+      
+    });
+ 
+    // 也可以返回一个函数进行清理
+    // return {
+    //   count
+    // };
+  },
   data() {
     return {
       message: '',
