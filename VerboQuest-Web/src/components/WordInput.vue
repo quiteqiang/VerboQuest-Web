@@ -71,11 +71,11 @@ export default {
       ],
       cards: [
         {
-            "wordId": 32,
-            "word": "history",
-            "timeCreated": "2025-02-08T14:44:45.463+00:00",
-            "definition": "The study of past events, particularly in human affairs",
-            "sentence": "medieval European history"
+            "wordId": 33,
+            "word": "heterogeneous",
+            "timeCreated": "2025-02-08T14:45:35.410+00:00",
+            "definition": "diverse in character or content",
+            "sentence": "a large and heterogeneous collection"
         },
         {
             "wordId": 33,
@@ -83,6 +83,34 @@ export default {
             "timeCreated": "2025-02-08T14:45:35.410+00:00",
             "definition": "diverse in character or content",
             "sentence": "a large and heterogeneous collection"
+        },
+        {
+            "wordId": 34,
+            "word": "objectionable",
+            "timeCreated": "2025-02-08T14:46:20.635+00:00",
+            "definition": "unpleasant or offensive",
+            "sentence": "I find his theory objectionable in its racist undertones"
+        },
+        {
+            "wordId": 33,
+            "word": "heterogeneous",
+            "timeCreated": "2025-02-08T14:45:35.410+00:00",
+            "definition": "diverse in character or content",
+            "sentence": "a large and heterogeneous collection"
+        },
+        {
+            "wordId": 31,
+            "word": "five",
+            "timeCreated": "2025-02-06T12:56:19.551+00:00",
+            "definition": "equivalent to the sum of two and three",
+            "sentence": "the bulbs are planted in threes or fives"
+        },
+        {
+            "wordId": 30,
+            "word": "four",
+            "timeCreated": "2025-02-06T12:56:19.551+00:00",
+            "definition": "equivalent to the product of two and two",
+            "sentence": "the girls walked in pairs or fours"
         }
     ]
     };
