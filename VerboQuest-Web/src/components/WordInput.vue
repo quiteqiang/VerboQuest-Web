@@ -4,7 +4,7 @@
       <v-col v-for="item in cards" :key="item.wordId" cols="16" md="4">
         <v-card
           variant="elevated"
-          class="mx-auto"
+          class="mx-auto fixed-height-card"
           color="surface-variant"
           max-width="344"
           :title="item.word"
@@ -204,5 +204,14 @@ button:disabled {
 
 .v-card .v-card-subtitle {
   white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fixed-height-card {
+  height: 200px; /* Set a fixed height */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 </style>
