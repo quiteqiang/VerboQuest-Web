@@ -14,7 +14,9 @@
             {{ item.sentence}}
           </v-card-subtitle>
           <template v-slot:actions>
-            <v-btn text>Button</v-btn>
+            <v-btn text>I KNEW!</v-btn>
+            <!-- <v-btn mdi>AI</v-btn> -->
+            <svg-icon type="mdi" :path=path></svg-icon>
           </template>
         </v-card>
       </v-col>
@@ -37,8 +39,13 @@ import { recordWord, fetchWords } from '@/api/word'
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 import { onMounted } from 'vue';
+import SvgIcon from '@jamescoyle/vue-icon';
+import { mdiRefreshAuto } from '@mdi/js';
 
 export default {
+  components: {
+		SvgIcon
+	},
   setup() {
  
     onMounted(() => {
@@ -69,6 +76,7 @@ export default {
       variants: ['elevated', 'tonal', 'elevated',
       'elevated', 'tonal', 'elevated'
       ],
+      path: mdiRefreshAuto,
       cards: [
         {
             "wordId": 33,
