@@ -2,9 +2,10 @@
   <v-container>
     <v-row dense>
       <v-col v-for="item in cards" :key="item.wordId" cols="16" md="4">
+        <!-- 卡片大小自动调整，如果例句太长 -->
         <v-card
           variant="elevated"
-          class="mx-auto fixed-height-card"
+          class="mx-auto fixed-height-card fill-height"
           color="surface-variant"
           max-width="344"
           :title="item.word"
@@ -214,7 +215,8 @@ button:disabled {
 }
 
 .fixed-height-card {
-  height: 200px; /* Set a fixed height */
+  max-height: 400px; /* Set a fixed height */
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
