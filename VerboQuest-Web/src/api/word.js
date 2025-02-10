@@ -14,3 +14,10 @@ export const fetchWords = (num) => {
     method:'GET'
   })
 }
+
+export const knownWord = (wordID) => {
+  return request({
+    url: '/word/known/' + wordID,
+    method:'PATCH'
+  })
+}

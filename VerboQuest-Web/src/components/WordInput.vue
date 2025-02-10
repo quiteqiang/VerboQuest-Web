@@ -16,7 +16,7 @@
           <template v-slot:actions>
             <v-tooltip text="I knew this" location="bottom">
               <template v-slot:activator="{ props }">
-                <svg-icon v-bind="props" type="mdi" :path="IknewIt"></svg-icon>
+                <svg-icon v-bind="props" type="mdi" :path="IknewIt" @click="removeKnownCard(item)"></svg-icon>
               </template>
             </v-tooltip>
             <v-tooltip text="Generate def & sentence by AI" location="bottom">
@@ -52,10 +52,10 @@
 
 <script>
 import { VCard, } from 'vuetify/lib/components/index.mjs';
-import { recordWord, fetchWords } from '@/api/word'
+import { recordWord, fetchWords, knownWord } from '@/api/word'
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
-import { onMounted } from 'vue';
+import { onMounted, getCurrentInstance } from 'vue';
 import SvgIcon from '@jamescoyle/vue-icon';
 import { mdiRefreshAuto, mdiCloudPlusOutline, mdiHeadPlusOutline, mdiDeleteAlert } from '@mdi/js';
 
@@ -63,27 +63,6 @@ export default {
   components: {
 		SvgIcon
 	},
-  setup() {
- 
-    onMounted(() => {
-      // 在这里可以执行DOM操作或数据请求
-      console.log('组件已挂载');
-      try {
-        fetchWords(6).then(response => {
-          console.log("mounted words")
-          console.log(response)
-        });
-      } catch (error) {
-        console.error('请求错误:', error);
-      }
-      
-    });
- 
-    // 也可以返回一个函数进行清理
-    // return {
-    //   count
-    // };
-  },
   data() {
     return {
       message: '',
@@ -97,51 +76,28 @@ export default {
       IknewIt: mdiCloudPlusOutline,
       forgot: mdiHeadPlusOutline,
       removeWord: mdiDeleteAlert,
-      cards: [
-        {
-            "wordId": 33,
-            "word": "heterogeneous",
-            "timeCreated": "2025-02-08T14:45:35.410+00:00",
-            "definition": "diverse in character or content",
-            "sentence": "a large and heterogeneous collection"
-        },
-        {
-            "wordId": 33,
-            "word": "heterogeneous",
-            "timeCreated": "2025-02-08T14:45:35.410+00:00",
-            "definition": "diverse in character or content",
-            "sentence": "a large and heterogeneous collection"
-        },
-        {
-            "wordId": 34,
-            "word": "objectionable",
-            "timeCreated": "2025-02-08T14:46:20.635+00:00",
-            "definition": "unpleasant or offensive",
-            "sentence": "I find his theory objectionable in its racist undertones"
-        },
-        {
-            "wordId": 33,
-            "word": "heterogeneous",
-            "timeCreated": "2025-02-08T14:45:35.410+00:00",
-            "definition": "diverse in character or content",
-            "sentence": "a large and heterogeneous collection"
-        },
-        {
-            "wordId": 31,
-            "word": "five",
-            "timeCreated": "2025-02-06T12:56:19.551+00:00",
-            "definition": "equivalent to the sum of two and three",
-            "sentence": "the bulbs are planted in threes or fives"
-        },
-        {
-            "wordId": 30,
-            "word": "four",
-            "timeCreated": "2025-02-06T12:56:19.551+00:00",
-            "definition": "equivalent to the product of two and two",
-            "sentence": "the girls walked in pairs or fours"
-        }
-    ]
+      cards: null
     };
+  },
+  setup() {
+    const ins = getCurrentInstance();
+    onMounted(() => {
+      // 在这里可以执行DOM操作或数据请求
+      console.log('组件已挂载');
+      try {
+        fetchWords(6).then(response => {
+          ins.data.cards = response.data.data 
+        });
+      } catch (error) {
+        console.error('请求错误:', error);
+      }
+      
+    });
+ 
+    // 也可以返回一个函数进行清理
+    // return {
+    //   count
+    // };
   },
   methods: {
     async fetchExplanation() {
@@ -181,6 +137,27 @@ export default {
       }
       this.isLoading = false; // 结束加载
     },
+    removeKnownCard(item) {
+      // 先update 后端-> 200 -> 从前端移出去
+      new Promise((resolve, reject) => {
+          knownWord(item.wordId).then(response => {
+            if (response.status == 200) {
+              //TODO: 显示固定个数单词在页面
+              const { data } = response
+              // 过滤出去选中card
+              this.cards = this.cards.filter(function(cd) {
+                return cd.wordId != item.wordId
+              })
+            }
+            resolve()
+          }).catch(error => {
+            reject(error)
+          })
+      })
+    },
+    // removeCard () {
+
+    // }
   },
 };
 </script>
