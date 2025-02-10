@@ -14,9 +14,18 @@
             {{ item.sentence}}
           </v-card-subtitle>
           <template v-slot:actions>
-            <v-btn text>I KNEW!</v-btn>
+            <v-tooltip text="I knew this" location="bottom">
+              <template v-slot:activator="{ props }">
+                <svg-icon v-bind="props" type="mdi" :path="IknewIt"></svg-icon>
+              </template>
+            </v-tooltip>
+            <v-tooltip text="Generate def & sentence by AI" location="bottom">
+              <template v-slot:activator="{ props }">
+                <svg-icon v-bind="props" type="mdi" :path=path></svg-icon>
+              </template>
+            </v-tooltip>
             <!-- <v-btn mdi>AI</v-btn> -->
-            <svg-icon type="mdi" :path=path></svg-icon>
+            
           </template>
         </v-card>
       </v-col>
@@ -40,7 +49,7 @@ import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 import { onMounted } from 'vue';
 import SvgIcon from '@jamescoyle/vue-icon';
-import { mdiRefreshAuto } from '@mdi/js';
+import { mdiRefreshAuto, mdiCloudPlusOutline } from '@mdi/js';
 
 export default {
   components: {
@@ -77,6 +86,7 @@ export default {
       'elevated', 'tonal', 'elevated'
       ],
       path: mdiRefreshAuto,
+      IknewIt: mdiCloudPlusOutline,
       cards: [
         {
             "wordId": 33,
