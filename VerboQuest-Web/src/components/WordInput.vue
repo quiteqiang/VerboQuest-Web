@@ -29,6 +29,11 @@
                 <svg-icon v-bind="props" type="mdi" :path=forgot></svg-icon>
               </template>
             </v-tooltip>
+            <v-tooltip text="Ops, typo, remove word" location="bottom">
+              <template v-slot:activator="{ props }">
+                <svg-icon v-bind="props" type="mdi" :path=removeWord></svg-icon>
+              </template>
+            </v-tooltip> 
           </template>
         </v-card>
       </v-col>
@@ -52,7 +57,7 @@ import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 import { onMounted } from 'vue';
 import SvgIcon from '@jamescoyle/vue-icon';
-import { mdiRefreshAuto, mdiCloudPlusOutline, mdiHeadPlusOutline } from '@mdi/js';
+import { mdiRefreshAuto, mdiCloudPlusOutline, mdiHeadPlusOutline, mdiDeleteAlert } from '@mdi/js';
 
 export default {
   components: {
@@ -91,6 +96,7 @@ export default {
       path: mdiRefreshAuto,
       IknewIt: mdiCloudPlusOutline,
       forgot: mdiHeadPlusOutline,
+      removeWord: mdiDeleteAlert,
       cards: [
         {
             "wordId": 33,
