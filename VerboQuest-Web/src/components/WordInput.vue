@@ -32,7 +32,7 @@
             </v-tooltip>
             <v-tooltip text="Ops, typo, remove word" location="bottom">
               <template v-slot:activator="{ props }">
-                <svg-icon v-bind="props" type="mdi" :path=removeWord></svg-icon>
+                <svg-icon v-bind="props" type="mdi" :path=removeWord @click="removeForgotCard(item)"></svg-icon>
               </template>
             </v-tooltip> 
           </template>
@@ -53,7 +53,7 @@
 
 <script>
 import { VCard, } from 'vuetify/lib/components/index.mjs';
-import { recordWord, fetchWords, knownWord } from '@/api/word'
+import { recordWord, fetchWords, knownWord, forgotWord } from '@/api/word'
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 import { onMounted, getCurrentInstance } from 'vue';
@@ -156,9 +156,24 @@ export default {
           })
       })
     },
-    // removeCard () {
-
-    // }
+    removeForgotCard (item) {
+      // 先update 后端-> 200 -> 从前端移出去
+      new Promise((resolve, reject) => {
+        forgotWord(item.wordId).then(response => {
+            if (response.status == 200) {
+              //TODO: 显示固定个数单词在页面
+              const { data } = response
+              // 过滤出去选中card
+              this.cards = this.cards.filter(function(cd) {
+                return cd.wordId != item.wordId
+              })
+            }
+            resolve()
+          }).catch(error => {
+            reject(error)
+          })
+      })
+    }
   },
 };
 </script>

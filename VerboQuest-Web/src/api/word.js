@@ -21,3 +21,10 @@ export const knownWord = (wordID) => {
     method:'PATCH'
   })
 }
+
+export const forgotWord = (wordID) => {
+  return request({
+    url: '/word/forgot/' + wordID,
+    method:'PATCH'
+  })
+}
