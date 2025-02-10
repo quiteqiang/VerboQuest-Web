@@ -24,8 +24,11 @@
                 <svg-icon v-bind="props" type="mdi" :path=path></svg-icon>
               </template>
             </v-tooltip>
-            <!-- <v-btn mdi>AI</v-btn> -->
-            
+            <v-tooltip text="Forgot, needs more practice" location="bottom">
+              <template v-slot:activator="{ props }">
+                <svg-icon v-bind="props" type="mdi" :path=forgot></svg-icon>
+              </template>
+            </v-tooltip>
           </template>
         </v-card>
       </v-col>
@@ -49,7 +52,7 @@ import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 import { onMounted } from 'vue';
 import SvgIcon from '@jamescoyle/vue-icon';
-import { mdiRefreshAuto, mdiCloudPlusOutline } from '@mdi/js';
+import { mdiRefreshAuto, mdiCloudPlusOutline, mdiHeadPlusOutline } from '@mdi/js';
 
 export default {
   components: {
@@ -87,6 +90,7 @@ export default {
       ],
       path: mdiRefreshAuto,
       IknewIt: mdiCloudPlusOutline,
+      forgot: mdiHeadPlusOutline,
       cards: [
         {
             "wordId": 33,
