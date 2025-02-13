@@ -39,3 +39,10 @@ export const nextRandom = (idsOnBoard) => {
     data: idsOnBoard
   })
 }
+
+export const deleteWord = (id) => {
+  return request({
+    url: '/word/' + id,
+    method:'DELETE'
+  })
+}

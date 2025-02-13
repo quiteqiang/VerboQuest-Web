@@ -27,12 +27,12 @@
             </v-tooltip>
             <v-tooltip text="Forgot, needs more practice" location="bottom">
               <template v-slot:activator="{ props }">
-                <svg-icon v-bind="props" type="mdi" :path=forgot></svg-icon>
+                <svg-icon v-bind="props" type="mdi" :path=forgot @click="removeForgotCard(item)"></svg-icon>
               </template>
             </v-tooltip>
             <v-tooltip text="Ops, typo, remove word" location="bottom">
               <template v-slot:activator="{ props }">
-                <svg-icon v-bind="props" type="mdi" :path=removeWord @click="removeForgotCard(item)"></svg-icon>
+                <svg-icon v-bind="props" type="mdi" :path=removeWord @click="deleteFromCards(item)"></svg-icon>
               </template>
             </v-tooltip> 
           </template>
@@ -53,12 +53,12 @@
 
 <script>
 import { VCard, } from 'vuetify/lib/components/index.mjs';
-import { recordWord, fetchWords, knownWord, forgotWord, nextRandom } from '@/api/word'
+import { recordWord, fetchWords, knownWord, forgotWord, nextRandom, deleteWord } from '@/api/word'
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 import { onMounted, getCurrentInstance } from 'vue';
 import SvgIcon from '@jamescoyle/vue-icon';
-import { mdiRefreshAuto, mdiCloudPlusOutline, mdiHeadPlusOutline, mdiDeleteAlert } from '@mdi/js';
+import { mdiRefreshAuto, mdiCloudPlusOutline, mdiHeadPlusOutline, mdiDeleteAlert} from '@mdi/js';
 
 export default {
   components: {
@@ -177,7 +177,7 @@ export default {
           })
       })
     },
-    async fetchNextrandomword(item) {
+    async fetchNextrandomword() {
       const wordIds = this.cards.map( wd => wd.wordId)
       const jsonfy = JSON.stringify(wordIds)
       new Promise((resolve, reject) => {
@@ -191,6 +191,25 @@ export default {
             reject(error)
           })
         })
+    },
+    async deleteFromCards(item) {
+      new Promise((resolve, reject) => {
+        deleteWord(item.wordId).then(response => {
+            if (response.status == 200) {
+              //TODO: 显示固定个数单词在页面
+              const { data } = response
+              // 过滤出去选中card
+              this.cards = this.cards.filter(function(cd) {
+                return cd.wordId != item.wordId
+              })
+              // GET一个新的word过来
+              this.fetchNextrandomword()
+            }
+            resolve()
+          }).catch(error => {
+            reject(error)
+          })
+      })
     }
   },
 };
