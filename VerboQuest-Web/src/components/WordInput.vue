@@ -149,6 +149,7 @@ export default {
               this.cards = this.cards.filter(function(cd) {
                 return cd.wordId != item.wordId
               })
+              this.fetchNextrandomword()
             }
             resolve()
           }).catch(error => {
@@ -179,7 +180,6 @@ export default {
     async fetchNextrandomword(item) {
       const wordIds = this.cards.map( wd => wd.wordId)
       const jsonfy = JSON.stringify(wordIds)
-      console.log(JSON.stringify(wordIds) == wordIds)
       new Promise((resolve, reject) => {
           nextRandom(jsonfy).then(response => {
             console.log(response)
