@@ -28,3 +28,14 @@ export const forgotWord = (wordID) => {
     method:'PATCH'
   })
 }
+
+export const nextRandom = (idsOnBoard) => {
+  return request({
+    url: '/word/nextRandom/',
+    method:'POST',
+    headers: {
+      'Content-type': 'application/json'
+    },
+    data: idsOnBoard
+  })
+}

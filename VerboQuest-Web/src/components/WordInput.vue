@@ -53,7 +53,7 @@
 
 <script>
 import { VCard, } from 'vuetify/lib/components/index.mjs';
-import { recordWord, fetchWords, knownWord, forgotWord } from '@/api/word'
+import { recordWord, fetchWords, knownWord, forgotWord, nextRandom } from '@/api/word'
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 import { onMounted, getCurrentInstance } from 'vue';
@@ -167,12 +167,30 @@ export default {
               this.cards = this.cards.filter(function(cd) {
                 return cd.wordId != item.wordId
               })
+              // GET一个新的word过来
+              this.fetchNextrandomword()
             }
             resolve()
           }).catch(error => {
             reject(error)
           })
       })
+    },
+    async fetchNextrandomword(item) {
+      const wordIds = this.cards.map( wd => wd.wordId)
+      const jsonfy = JSON.stringify(wordIds)
+      console.log(JSON.stringify(wordIds) == wordIds)
+      new Promise((resolve, reject) => {
+          nextRandom(jsonfy).then(response => {
+            console.log(response)
+            if (response.status == 200) {
+              this.cards.push(response.data.data)
+            }
+            resolve()
+          }).catch(error => {
+            reject(error)
+          })
+        })
     }
   },
 };
