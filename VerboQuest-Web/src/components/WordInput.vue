@@ -20,14 +20,14 @@
                 <svg-icon v-bind="props" type="mdi" :path="IknewIt" @click="removeKnownCard(item)"></svg-icon>
               </template>
             </v-tooltip>
-            <v-tooltip text="Generate def & sentence by AI" location="bottom">
+            <v-tooltip text="Generate def & sentence by AI" location="bottom" >
               <template v-slot:activator="{ props }">
-                <svg-icon v-bind="props" type="mdi" :path=path @click="genDefAndSentence(item)"></svg-icon>
+                <svg-icon :disabled="aiGeneratingInProgress" v-bind="props" type="mdi" :path=path @click="genDefAndSentence(item)"></svg-icon>
               </template>
             </v-tooltip>
             <v-tooltip text="Forgot, needs more practice" location="bottom">
               <template v-slot:activator="{ props }">
-                <svg-icon v-bind="props" type="mdi" :path=forgot @click="removeForgotCard(item)"></svg-icon>
+                <svg-icon v-bind="props" type="mdi" :path=forgot @click="removeForgotCard(item)" dis></svg-icon>
               </template>
             </v-tooltip>
             <v-tooltip text="Ops, typo, remove word" location="bottom">
@@ -78,7 +78,8 @@ export default {
       IknewIt: mdiCloudPlusOutline,
       forgot: mdiHeadPlusOutline,
       removeWord: mdiDeleteAlert,
-      cards: null
+      cards: null,
+      aiGeneratingInProgress: false
     };
   },
   setup() {
@@ -213,18 +214,50 @@ export default {
       })
     },
     async genDefAndSentence(item) {
-      new Promise((resolve, reject) => {
-        aiGen(item.wordId, item.word).then(response => {
-            if (response.status == 200) {
-              item.definition = response.data.data.definition
-              item.sentence = response.data.data.sentence
-              const { data } = response
-            }
-            resolve()
-          }).catch(error => {
-            reject(error)
-          })
-      })
+      console.log("before click   " + this.aiGeneratingInProgress)
+      if (this.aiGeneratingInProgress != true) {
+        this.aiGeneratingInProgress = true
+        toast( "DeepSeek 生成中", {
+                  "theme": "auto",
+                  "type": "warning",
+                  "pauseOnFocusLoss": false,
+                  "autoClose": 2000,
+                  "transition": "flip",
+                  "dangerouslyHTMLString": true
+                })
+        new Promise((resolve, reject) => {
+          aiGen(item.wordId, item.word).then(response => {
+              if (response.status == 200) {
+                item.definition = response.data.data.definition
+                item.sentence = response.data.data.sentence
+                const { data } = response
+                this.aiGeneratingInProgress = false
+              }
+              resolve()
+            }).catch(error => {
+              this.aiGeneratingInProgress = false
+              toast( "DeepSeek 请求失败", {
+                  "theme": "auto",
+                  "type": "error",
+                  "pauseOnFocusLoss": false,
+                  "autoClose": 2000,
+                  "transition": "flip",
+                  "dangerouslyHTMLString": true
+                })
+              reject(error)
+            })
+        })
+      }
+      if (this.aiGeneratingInProgress == true) { 
+        toast( "请勿重复点击", {
+                  "theme": "auto",
+                  "type": "error",
+                  "pauseOnFocusLoss": false,
+                  "autoClose": 2000,
+                  "transition": "flip",
+                  "dangerouslyHTMLString": true
+                })
+      }
     }
   },
 };
