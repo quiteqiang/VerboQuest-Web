@@ -8,7 +8,7 @@ const baseURL = 'http://localhost:8083/'
 const instance = axios.create({
   // TODO 1. 基础地址，超时时间
   baseURL,
-  timeout: 10000 //十秒内未收到响应则取消请求
+  timeout: 40000 //二十秒内未收到响应则取消请求
 })
  
 // 请求拦截器

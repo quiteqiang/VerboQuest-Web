@@ -22,7 +22,7 @@
             </v-tooltip>
             <v-tooltip text="Generate def & sentence by AI" location="bottom">
               <template v-slot:activator="{ props }">
-                <svg-icon v-bind="props" type="mdi" :path=path></svg-icon>
+                <svg-icon v-bind="props" type="mdi" :path=path @click="genDefAndSentence(item)"></svg-icon>
               </template>
             </v-tooltip>
             <v-tooltip text="Forgot, needs more practice" location="bottom">
@@ -54,6 +54,7 @@
 <script>
 import { VCard, } from 'vuetify/lib/components/index.mjs';
 import { recordWord, fetchWords, knownWord, forgotWord, nextRandom, deleteWord } from '@/api/word'
+import { aiGen } from '@/api/aiChat'
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 import { onMounted, getCurrentInstance } from 'vue';
@@ -204,6 +205,20 @@ export default {
               })
               // GET一个新的word过来
               this.fetchNextrandomword()
+            }
+            resolve()
+          }).catch(error => {
+            reject(error)
+          })
+      })
+    },
+    async genDefAndSentence(item) {
+      new Promise((resolve, reject) => {
+        aiGen(item.wordId, item.word).then(response => {
+            if (response.status == 200) {
+              item.definition = response.data.data.definition
+              item.sentence = response.data.data.sentence
+              const { data } = response
             }
             resolve()
           }).catch(error => {
