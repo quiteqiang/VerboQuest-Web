@@ -1,14 +1,11 @@
 # VerboQuest-Web
 
-This template should help get you started developing with Vue 3 in Vite.
+This is a Web tool for you to practice English verbos. It has backend connected to DeepSeek to give you more creative sample sentence & definition.
 
-## Recommended IDE Setup
+![Alt text](web.png)
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
+## Button used to Generate word definition & sample sentence
+![Alt text](ai.png)
 
 ## Project Setup
 
@@ -20,16 +17,4 @@ npm install
 
 ```sh
 npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
 ```
